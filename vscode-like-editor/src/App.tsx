@@ -119,12 +119,11 @@ const App: React.FC = () => {
           )}
         </div>
       </div>
-      {isTerminalVisible && ( // Conditionally render the terminal
+      {isTerminalVisible && (
         <XTermTerminal 
-          onUpdateSidebar={(path: string) => {
-            // Update sidebar logic here
-            // For example, you might want to refresh the folder structure
-            // or select a specific file/folder based on the path
+          onUpdateSidebar={() => {
+            // Implement sidebar update logic here
+            refreshFolderStructure();
           }}
         />
       )}

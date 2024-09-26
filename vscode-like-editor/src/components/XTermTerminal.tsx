@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Terminal } from 'xterm';
 import 'xterm/css/xterm.css';
+import "../styles/XTermTerminal.css";
 
 const XTermTerminal: React.FC<{
   onUpdateSidebar: () => void;

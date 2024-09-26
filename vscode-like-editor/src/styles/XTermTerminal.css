@@ -1,0 +1,48 @@
+.terminal-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.terminal-tabs {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #333;
+    padding: 5px;
+    position: relative; /* Added for positioning the button */
+}
+
+.terminal-tab {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.terminal-tab.active {
+    background-color: #1e1e1e;
+}
+
+.new-terminal-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    position: absolute; /* Positioning the button */
+    right: 10px; /* Adjust as needed */
+    top: 5px; /* Adjust as needed */
+}
+
+.new-terminal-btn:hover {
+    background-color: #45a049;
+}
+
+.terminal-container {
+    flex-grow: 1;
+    background-color: #1e1e1e;
+    height: 300px;
+}

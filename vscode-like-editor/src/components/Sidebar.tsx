@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaFile, FaFolder, FaFolderPlus, FaFileMedical } from 'react-icons/fa';
 import { File, Folder } from './types';
 import '../styles/Sidebar.css';
@@ -13,6 +13,25 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ folders, onCreateFolder, onCreateFile, onOpenFile }) => {
   const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
 
+  useEffect(() => {
+    const fetchFolderStructure = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/folder-structure');
+        if (response.ok) {
+          const data = await response.json();
+          // Update folders state with fetched data
+          setFolders(data);
+        } else {
+          console.error('Failed to fetch folder structure');
+        }
+      } catch (error) {
+        console.error('Error fetching folder structure:', error);
+      }
+    };
+
+    fetchFolderStructure();
+  }, []);
+
   const toggleFolder = (folderName: string) => {
     setExpandedFolders(prev => {
       const newSet = new Set(prev);
@@ -24,6 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ folders, onCreateFolder, onCreateFile
       return newSet;
     });
   };
+
   const handleCreateFolder = async (parentFolderName: string) => {
     const folderName = prompt('Enter new folder name:');
     if (folderName) {
@@ -71,7 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({ folders, onCreateFolder, onCreateFile
   };
 
   const handleFileClick = (file: File) => {
-    onOpenFile(file); // Call the function to open the file in the editor
+    onOpenFile(file);
   };
 
   const renderFolders = (folders: Folder[], depth = 0) => {
@@ -82,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ folders, onCreateFolder, onCreateFile
             <FaFolder /> {folder.name}
           </span>
           <div className="folder-actions">
-            <span onClick={() => onCreateFolder(folder.name)}><FaFolderPlus /></span>
+            <span onClick={() => handleCreateFolder(folder.name)}><FaFolderPlus /></span>
             <span onClick={() => handleCreateFile(folder.name)}><FaFileMedical /></span>
           </div>
         </div>
